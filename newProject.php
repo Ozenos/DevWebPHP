@@ -22,8 +22,8 @@
       },
     };
   </script>
-  <script src="newTicket.js" defer></script>
-  <title>Cross Tickets - Nouveau ticket</title>
+  <script src="newProject.js" defer></script>
+  <title>Cross Tickets - Nouveau projet</title>
   <link rel="shortcut icon" href="Ticket.jpg" />
 </head>
 
@@ -31,47 +31,21 @@
 
   <div class="w-full max-w-2xl bg-background rounded-xl shadow-lg p-8">
     <h1 class="text-2xl font-bold mb-6 text-text">
-      Création d’un ticket
+      Création d’un projet
     </h1>
 
-    <form class="space-y-1" id="submitform" action="submitTicket.php" method="POST">
+    <form class="space-y-1" id="submitform" action="submitProject.php" method="POST">
 
       <!-- Titre -->
       <div>
         <label class="block text-sm font-medium text-accent mb-1">
           Titre *
         </label>
-        <input type="text" id="title" placeholder="Ex : Dysfonctionnement de l’export PDF" name="title"
+        <input type="title" id="title" placeholder="Ex : Cross Tickets collab" name="title"
           class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <p id="title_error"
           class="invisible inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
           Veuillez inclure un titre</p>
-      </div>
-
-      <!-- Statut et Type -->
-      <div class="flex">
-        <!-- Statut -->
-        <div class="w-1/4 mb-2">
-          <label class="block text-sm font-medium text-accent mb-1">
-            Statut
-          </label>
-          <select class="rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>En cours</option>
-            <option>Ouvert</option>
-            <option>Terminé</option>
-          </select>
-        </div>
-
-        <!-- Type -->
-        <div class="w-1/4 mb-2">
-          <label class="block text-sm font-medium text-accent mb-1">
-            Type
-          </label>
-          <select class="rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option>Inclus</option>
-            <option>Facturable</option>
-          </select>
-        </div>
       </div>
 
       <!-- Description -->
@@ -83,20 +57,20 @@
           class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
       </div>
 
-      <!-- Temps estimé -->
+      <!-- Rattacher des tickets -->
       <div>
         <label class="block text-sm font-medium text-accent mb-1">
-          Temps estimé (en heures) *
+          Rattacher des tickets
         </label>
-        <input type="number" id="time" min="1" step="1" placeholder="1" name="time"
-          class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        <p id="time_error"
-          class="invisible inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
-          Veuillez inclure une estimation de temps en heures entières</p>
+        <textarea placeholder="Noms de tickets"
+          class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        <p class="text-xs text-accent">
+          Séparer les noms par des virgules
+        </p>
       </div>
 
       <!-- Collaborateurs -->
-      <div>
+      <div class="pt-2">
         <label class="block text-sm font-medium text-accent mb-1">
           Collaborateurs
         </label>
@@ -116,7 +90,7 @@
           * : champs obligatoires</p>
         <button type="submit"
           class="w-full bg-primary text-white py-2 rounded-lg font-semibold hover:bg-accent transition">
-          Générer le ticket
+          Créer le projet
         </button>
       </div>
 

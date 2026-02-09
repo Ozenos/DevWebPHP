@@ -7,20 +7,12 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Récupération des données
 $title = trim($_POST['title'] ?? '');
-$time  = $_POST['time'] ?? '';
 
 $errors = [];
 
 // Validation du titre
 if ($title === '') {
     $errors[] = "Le titre est obligatoire.";
-}
-
-// Validation du temps estimé
-if ($time === '') {
-    $errors[] = "Le temps estimé est obligatoire.";
-} elseif (!filter_var($time, FILTER_VALIDATE_INT) || (int)$time <= 0) {
-    $errors[] = "Le temps estimé doit être un nombre entier positif.";
 }
 
 // S’il y a des erreurs

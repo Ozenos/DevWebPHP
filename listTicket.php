@@ -62,8 +62,17 @@ $tableau = [
     ]
 ];
 
-?>
+$advancementStyles = [
+    "Ouvert" => "bg-blue-100 text-blue-700",
+    "En cours" => "bg-orange-100 text-orange-700",
+    "Terminé" => "bg-purple-100 text-purple -700",
+];
 
+$facturationStyles = [
+    "Inclus" => "bg-lime-100 text-lime-700",
+    "Facturable" => "bg-yellow-100 text-yellow-700",
+];
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -115,25 +124,27 @@ $tableau = [
     </header>
 
     <div class="flex pt-14 min-h-screen">
-
         <!-- Bandeau gauche -->
         <aside class="w-64 bg-background shadow-lg p-6 space-y-6">
-            <div class="space-y-6">
+            <form method="get" class="space-y-6">
+
                 <!-- Facturation -->
                 <div>
                     <h2 class="text-md font-semibold text-accent uppercase mb-3">
                         Facturation
                     </h2>
                     <div class="flex flex-col gap-2">
-                        <div class="px-3 py-2 rounded-md border border-tertiary bg-lime-100">
-                            <input type="checkbox" data-filter="inclus" class="hover:bg-secondary focus:outline-none">
+                        <label class="px-3 py-2 rounded-md border border-tertiary bg-lime-100">
+                            <input type="checkbox" name="facturation[]" value="Inclus"
+                                <?= in_array("Inclus", $_GET["facturation"] ?? []) ? "checked" : "" ?>>
                             <span class="text-md text-lime-700">Inclus</span>
-                        </div>
-                        <div class="px-3 py-2 rounded-md border border-tertiary bg-yellow-100">
-                            <input type="checkbox" data-filter="facturable"
-                                class="hover:bg-secondary focus:outline-none">
+                        </label>
+
+                        <label class="px-3 py-2 rounded-md border border-tertiary bg-yellow-100">
+                            <input type="checkbox" name="facturation[]" value="Facturable"
+                                <?= in_array("Facturable", $_GET["facturation"] ?? []) ? "checked" : "" ?>>
                             <span class="text-md text-yellow-700">Facturable</span>
-                        </div>
+                        </label>
                     </div>
                 </div>
 
@@ -143,74 +154,103 @@ $tableau = [
                         Avancement
                     </h2>
                     <div class="flex flex-col gap-2">
-                        <div class="px-3 py-2 rounded-md border border-tertiary bg-blue-100">
-                            <input type="checkbox" data-filter="ouvert" class="hover:bg-secondary focus:outline-none">
-                            <span class="text-md text-blue-700">Ouvert</span> 
-                        </div>
-                        <div class="px-3 py-2 rounded-md border border-tertiary bg-orange-100 ">
-                            <input type="checkbox" data-filter="cours" class="hover:bg-secondary focus:outline-none">
-                            <span class="text-md text-orange-700">En cours</span>
-                        </div>
-                        <div class="px-3 py-2 rounded-md border border-tertiary bg-lime-100 ">
-                            <input type="checkbox" data-filter="termine" class="hover:bg-secondary focus:outline-none">
-                            <span class="text-md text-lime-700">Terminé</span>
-                        </div> 
+                        <?php foreach (["Ouvert", "En cours", "Terminé"] as $status): ?>
+                            <label class="px-3 py-2 rounded-md border border-tertiary
+                            <?= $advancementStyles[$status] ?? "bg-gray-100 text-gray-700"   ?>">
+                                <input type="checkbox" name="advancement[]" value="<?= $status ?>"
+                                    <?= in_array($status, $_GET["advancement"] ?? []) ? "checked" : "" ?>>
+                                <span class="text-md <?= $advancementStyles[$status] ?? "bg-gray-100 text-gray-700" ?>">
+                                    <?= $status ?></span>
+                            </label>
+                        <?php endforeach; ?>
                     </div>
                 </div>
-            </div>
+
+                <button class="w-full bg-primary text-white py-2 rounded-lg font-semibold">
+                    Filtrer
+                </button>
+                <a href="listTicket.php"
+                    class="block text-center mt-3 text-sm text-accent underline">
+                    Réinitialiser les filtres
+                </a>
+
+            </form>
         </aside>
 
         <div class="mt-5 grid
             grid-cols-[repeat(auto-fill,340px)]
             justify-center gap-6
             w-full min-w-0 py-4">
-            <?php foreach ($tableau as $ticket): ?>
-            <div class="ticket bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+            <?php
 
-                <!-- En-tête -->
-                <div class="flex justify-center">
-                    <h1 class="text-2xl font-bold text-text text-center">
-                        <?= htmlspecialchars($ticket["title"]) ?>
-                    </h1>
-                </div>
+                $filteredTickets = array_filter($tableau, function ($ticket) {
 
-                <!-- Temps passé -->
-                <div class="flex mb-2 justify-between gap-2">
-                    <div>
-                        <h2 class="text-sm font-semibold text-accent">
-                            Temps passé
-                        </h2>
-                        <p class="text-text">
-                            <?= $ticket["time"] ?> heure<?= $ticket["time"] > 1 ? "s" : "" ?>
-                        </p>
+                    // Facturation
+                    if (!empty($_GET["facturation"])) {
+                        if (!in_array($ticket["facturation"], $_GET["facturation"])) {
+                            return false;
+                        }
+                    }
+
+                    // Avancement
+                    if (!empty($_GET["advancement"])) {
+                        if (!in_array($ticket["advancement"], $_GET["advancement"])) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+            ?>
+            <?php foreach ($filteredTickets as $ticket): ?>
+                <div class="ticket bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+
+                    <!-- En-tête -->
+                    <div class="flex justify-center">
+                        <h1 class="text-2xl font-bold text-text text-center">
+                            <?= htmlspecialchars($ticket["title"]) ?>
+                        </h1>
                     </div>
 
-                    <div class="text-right">
-                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full">
+                    <!-- Temps passé -->
+                    <div class="flex mb-2 justify-between gap-2">
+                        <div>
+                            <h2 class="text-sm font-semibold text-accent">
+                                Temps passé
+                            </h2>
+                            <p class="text-text">
+                                <?= $ticket["time"] ?> heure<?= $ticket["time"] > 1 ? "s" : "" ?>
+                            </p>
+                        </div>
+
+                        <div class="text-right">
+                        <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full
+                            <?= $advancementStyles[$ticket["advancement"]] ?? "bg-gray-100 text-gray-700" ?>">
                             <?= $ticket["advancement"] ?>
                         </span>
-                        <span class="inline-block px-3 mt-1 py-1 text-sm font-semibold rounded-full">
+                        <span class="inline-block px-3 mt-1 py-1 text-sm font-semibold rounded-full
+                            <?= $facturationStyles[$ticket["facturation"]] ?? "bg-gray-100 text-gray-700" ?>">
                             <?= $ticket["facturation"] ?>
                         </span>
                     </div>
-                </div>
+                    </div>
 
-                <!-- Propriétaire et Collaborateurs -->
-                <div>
-                    <h2 class="text-sm font-semibold text-accent mb-2">
-                        Propriétaire et collaborateurs
-                    </h2>
-                    <ul class="flex gap-2 flex-wrap">
-                        <?php foreach ($ticket["collaborators"] as $collaborator): ?>
-                            <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
-                                <?= htmlspecialchars($collaborator) ?>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                </div>
+                    <!-- Propriétaire et Collaborateurs -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-accent mb-2">
+                            Propriétaire et collaborateurs
+                        </h2>
+                        <ul class="flex gap-2 flex-wrap">
+                            <?php foreach ($ticket["collaborators"] as $collaborator): ?>
+                                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                    <?= htmlspecialchars($collaborator) ?>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
 
-            </div>
-<?php endforeach; ?>
+                </div>
+            <?php endforeach; ?>
 
         </div>
     </div>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1c1917',   //stone-900
+                        secondary: '#f3f4f6', //gray-100
+                        tertiary: '#e5e7eb',  //gray-200
+                        accent: '#57534e',    //stone-600
+                        background: '#FFFFFF',
+                        text: '#030712',      //gray-950
+                        footertext: "#a8a29e" //stone-400
+                    },
+                },
+            },
+        };
+    </script>
+    <title>Cross Tickets - Tableau de bord</title>
+    <link rel="shortcut icon" href="Ticket.jpg" />
+</head>
+
+<body class="bg-secondary">
+
+    <!-- Bandeau supérieur -->
+    <header class="fixed top-0 left-0 right-0 h-14 bg-background shadow flex items-center justify-between px-6 z-20">
+        <div class="flex items-center gap-4">
+            <button class="text-text hover:text-footertext">
+                ☰
+            </button>
+            <a href="dashboard.html" class="font-semibold text-text">Dashboard</a>
+        </div>
+
+        <div class="flex items-center gap-4 text-sm">
+            <a href="profileAndParameters.html" class="text-accent">Jean Dupont</a>
+            <a href="connexion.html"
+                class="bg-primary text-white p-2 rounded-lg font-semibold hover:bg-accent transition">
+                Déconnexion
+            </a>
+        </div>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+
+        <!-- Bandeau gauche -->
+        <aside class="w-64 bg-background shadow-lg p-6 space-y-6">
+            <div>
+                <h2 class="text-md font-semibold text-accent uppercase mb-3">
+                    Projets
+                </h2>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="block text-text hover:text-footertext">GTB Leclerc</a></li>
+                    <li><a href="#" class="block text-text hover:text-footertext">SysEngine</a></li>
+                </ul>
+            </div>
+
+            <a href="#"
+                class="block text-center w-full bg-primary text-white p-2 rounded-lg text-sm font-semibold hover:bg-accent transition">
+                Créer un projet
+            </a>
+        </aside>
+
+        <!-- Contenu principal -->
+        <main class="flex-1 p-8 space-y-10">
+
+            <!-- Cartes de données -->
+            <section class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+                <div class="bg-background rounded-xl shadow p-6 justify-between flex">
+                    <div>
+                        <h3 class="text-sm text-accent mb-2">Tickets</h3>
+                        <p class="text-2xl font-bold text-text">
+                            2 <span class="text-sm font-normal text-accent">inclus</span>
+                        </p>
+                        <p class="text-2xl font-bold text-text">
+                            2 <span class="text-sm font-normal text-accent">facturables</span>
+                        </p>
+                    </div>
+                    <div class="mr-5">
+                        <a href="ListTicket.html"
+                            class="block text-center w-[80px] h-[80px] bg-secondary text-text pt-1 rounded-lg text-6xl font-semibold hover:bg-tertiary transition">
+                            +
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-background rounded-xl shadow p-6 justify-between flex">
+                    <div>
+                        <h3 class="text-sm text-accent mb-2">Collaborateurs</h3>
+                        <p class="text-2xl font-bold text-text">5</p>
+                        <ul class="text-sm text-accent mt-2 space-y-1">
+                            <li>Alice Martin</li>
+                            <li>Lucas Bernard</li>
+                            <li>Sofia Dupont</li>
+                        </ul>
+                    </div>
+                    <div class="mr-5">
+                        <a href="#"
+                            class="block text-center w-[80px] h-[80px] bg-secondary text-text pt-1 rounded-lg text-6xl font-semibold hover:bg-tertiary transition">
+                            +
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 justify-between flex">
+                    <div>
+                        <h3 class="text-sm text-accent mb-2">Clients</h3>
+                        <p class="text-2xl font-bold text-text">3</p>
+                        <ul class="text-sm text-accent mt-2 space-y-1">
+                            <li>Entreprise Alpha</li>
+                            <li>Société Beta</li>
+                            <li>Client Gamma</li>
+                        </ul>
+                    </div>
+                    <div class="mr-5">
+                        <a href="#"
+                            class="block text-center w-[80px] h-[80px] bg-secondary text-text pt-1 rounded-lg text-6xl font-semibold hover:bg-tertiary transition">
+                            +
+                        </a>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 justify-between flex">
+                    <div>
+                        <h3 class="text-sm text-accent mb-2">Projets</h3>
+                        <p class="text-2xl font-bold text-text">4</p>
+                    </div>
+                    <div class="mr-5">
+                        <a href="ListProject.html"
+                            class="block text-center w-[80px] h-[80px] bg-secondary text-text pt-1 rounded-lg text-6xl font-semibold hover:bg-tertiary transition">
+                            +
+                        </a>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Graphique -->
+            <section class="bg-white rounded-xl shadow p-6">
+                <h3 class="text-sm font-semibold text-accent mb-6">
+                    Temps passé sur les tickets
+                </h3>
+
+                <div class="flex">
+                    <!-- Axe Y -->
+                    <div class="flex flex-col justify-between text-xs text-accent mr-4 h-64">
+                        <span>8 h</span>
+                        <span>6 h</span>
+                        <span>4 h</span>
+                        <span>2 h</span>
+                        <span>0 h</span>
+                    </div>
+
+                    <!-- Graphique -->
+                    <div class="flex-1">
+                        <div class="relative h-64 border-l border-b border-footertext px-6 pb-6">
+
+                            <div class="absolute inset-0 flex items-end justify-start gap-6 px-8">
+
+                                <!-- 3h -->
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-xs text-accent mt-2">Lun</span>
+                                    <div class="w-10 bg-blue-500 rounded-t" style="height: 96px;"></div>
+                                </div>
+
+                                <!-- 5h -->
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-xs text-accent mt-2">Mar</span>
+                                    <div class="w-10 bg-blue-500 rounded-t" style="height: 160px;"></div>
+                                </div>
+
+                                <!-- 4h -->
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-xs text-accent mt-2">Mer</span>
+                                    <div class="w-10 bg-blue-500 rounded-t" style="height: 128px;"></div>
+                                </div>
+
+                                <!-- 6.5h -->
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-xs text-accent mt-2">Jeu</span>
+                                    <div class="w-10 bg-blue-500 rounded-t" style="height: 208px;"></div>
+                                </div>
+
+                                <!-- 5h -->
+                                <div class="flex flex-col items-center gap-1">
+                                    <span class="text-xs text-accent mt-2">Ven</span>
+                                    <div class="w-10 bg-blue-500 rounded-t" style="height: 160px;"></div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="text-center text-xs text-accent mt-2">
+                            Jours
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section projets -->
+            <div class="mt-5 grid
+            grid-cols-[repeat(auto-fill,340px)]
+            justify-center gap-6
+            w-full min-w-0 py-4">
+                <div class="bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+
+                    <!-- En-tête -->
+                    <div class="flex justify-center">
+                        <h1 class="text-2xl font-bold text-text text-center">
+                            GTB Leclerc
+                        </h1>
+                    </div>
+
+                    <!-- Contrat -->
+                    <div class="flex items-center mb-2">
+                        <h2 class="text-sm font-semibold text-accent">
+                            Contrat :
+                        </h2>
+                        <a href="#"
+                            class="ml-1 px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                            Margy-NEG
+                        </a>
+                    </div>
+
+                    <!-- Tickets -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-accent mb-2">
+                            Ticket(s)
+                        </h2>
+                        <ul class="flex gap-2 flex-wrap">
+                            <li>
+                                <a href="#"
+                                    class="px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                                    Désinstallation
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Propriétaire et Collaborateurs -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-accent mb-2">
+                            Propriétaire et collaborateurs
+                        </h2>
+                        <ul class="flex gap-2 flex-wrap">
+                            <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                                Vous
+                            </li>
+                            <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                Alice Martin
+                            </li>
+                            <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                Lucas Bernard
+                            </li>
+                            <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                Sofia Dupont
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+
+                    <!-- En-tête -->
+                    <div class="flex justify-center">
+                        <h1 class="text-2xl font-bold text-text text-center">
+                            SysEngine
+                        </h1>
+                    </div>
+
+                    <!-- Contrat -->
+                    <div class="flex items-center mb-2">
+                        <h2 class="text-sm font-semibold text-accent">
+                            Contrat :
+                        </h2>
+                        <a href="#"
+                            class="ml-1 px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                            Great Factory
+                        </a>
+                    </div>
+
+                    <!-- Tickets -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-accent mb-2">
+                            Ticket(s)
+                        </h2>
+                        <ul class="flex gap-2 flex-wrap">
+                            <li>
+                                <a href="#"
+                                    class="px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                                    Manufacture décommandée
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Propriétaire et Collaborateurs -->
+                    <div>
+                        <h2 class="text-sm font-semibold text-accent mb-2">
+                            Propriétaire et collaborateurs
+                        </h2>
+                        <ul class="flex gap-2 flex-wrap">
+                            <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                                Jean-Jacques Poireau
+                            </li>
+                            <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                Vous
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+
+</body>
+
+</html>

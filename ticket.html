@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1c1917',   //stone-900
+                        secondary: '#f3f4f6', //gray-100
+                        tertiary: '#e5e7eb',  //gray-200
+                        accent: '#57534e',    //stone-600
+                        background: '#FFFFFF',
+                        text: '#030712',      //gray-950
+                        footertext: "#a8a29e" //stone-400
+                    },
+                },
+            },
+        };
+    </script>
+    <title>Cross Tickets - Ticket</title>
+    <link rel="shortcut icon" href="Ticket.jpg" />
+</head>
+
+<body class="min-h-screen bg-tertiary flex items-center justify-center">
+
+    <div class="w-full max-w-2xl bg-background rounded-xl shadow-lg p-8 space-y-6">
+
+        <!-- En-tête -->
+        <div class="flex items-start justify-between items-center">
+            <h1 class="text-2xl font-bold text-text">
+                Dysfonctionnement de l’export PDF
+            </h1>
+
+            <div class="text-right">
+                <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full bg-orange-100 text-orange-700">
+                    En cours
+                </span>
+                <span class="inline-block px-3 mt-1 py-1 text-sm font-semibold rounded-full bg-lime-100 text-lime-700">
+                    Inclus
+                </span>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+            <h2 class="text-sm font-semibold text-accent mb-2">
+                Description
+            </h2>
+            <p class="text-text leading-relaxed">
+                Lors de la génération d’un fichier PDF depuis l’interface d’administration,
+                le document produit est incomplet et certaines sections sont manquantes.
+                Le problème a été reproduit sur plusieurs environnements.
+            </p>
+        </div>
+
+        <!-- Temps passé -->
+        <div class="flex mb-2">
+            <div>
+                <h2 class="text-sm font-semibold text-accent">
+                    Temps passé
+                </h2>
+                <p class="text-text">
+                    2 heures
+                </p>
+            </div>
+            <div class="ml-5">
+                <h2 class="text-sm font-semibold text-accent">
+                    Temps estimé
+                </h2>
+                <p class="text-text">
+                    4 heures
+                </p>
+            </div>
+        </div>
+
+        <!-- Propriétaire et collaborateurs -->
+        <div>
+            <h2 class="text-sm font-semibold text-accent mb-2">
+                Propriétaire et collaborateurs
+            </h2>
+            <ul class="flex gap-2 flex-wrap">
+                <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                    Vous
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Alice Martin
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Lucas Bernard
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Sofia Dupont
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

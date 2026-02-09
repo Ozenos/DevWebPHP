@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1c1917',   //stone-900
+                        secondary: '#f3f4f6', //gray-100
+                        tertiary: '#e5e7eb',  //gray-200
+                        accent: '#57534e',    //stone-600
+                        background: '#FFFFFF',
+                        text: '#030712',      //gray-950
+                        footertext: "#a8a29e" //stone-400
+                    },
+                },
+            },
+        };
+    </script>
+    <title>Cross Tickets - Ticket</title>
+    <link rel="shortcut icon" href="Ticket.jpg" />
+</head>
+
+<body class="min-h-screen bg-tertiary flex items-center justify-center">
+
+    <div class="w-full max-w-2xl bg-background rounded-xl shadow-lg p-8 space-y-6">
+
+        <!-- En-tête -->
+        <div class="flex justify-center">
+            <h1 class="text-2xl font-bold text-text">
+                GTB Leclerc
+            </h1>
+        </div>
+
+        <!-- Contrat -->
+        <div class="flex items-center mb-2">
+            <h2 class="text-sm font-semibold text-accent">
+                Contrat :
+            </h2>
+            <a href="#"
+                class="ml-1 px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                Margy-NEG
+            </a>
+        </div>
+
+        <!-- Description -->
+        <div>
+            <h2 class="text-sm font-semibold text-accent mb-2">
+                Description
+            </h2>
+            <p class="text-text leading-relaxed">
+                Mise en place d'appareils connectés dans le nord de la France
+                par GTB Leclerc. Support des problèmes, gestion des effectifs,
+                mise en place de solutions à long et court terme.
+            </p>
+        </div>
+
+        <!-- Tickets -->
+        <div>
+            <h2 class="text-sm font-semibold text-accent mb-2">
+                Ticket(s)
+            </h2>
+            <ul class="flex gap-2 flex-wrap">
+                <li>
+                    <a href="#"
+                        class="px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                        Désinstallation
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mb-2">
+            <h2 class="text-sm font-semibold text-accent">
+                Temps passé
+            </h2>
+            <p class="text-text">
+                2 heures
+            </p>
+        </div>
+
+        <!-- Propriétaire et Collaborateurs -->
+        <div>
+            <h2 class="text-sm font-semibold text-accent mb-2">
+                Propriétaire et collaborateurs
+            </h2>
+            <ul class="flex gap-2 flex-wrap">
+                <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                    Vous
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Alice Martin
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Lucas Bernard
+                </li>
+                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                    Sofia Dupont
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</body>
+
+</html>

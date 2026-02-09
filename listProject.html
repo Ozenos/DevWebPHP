@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1c1917',   //stone-900
+                        secondary: '#f3f4f6', //gray-100
+                        tertiary: '#e5e7eb',  //gray-200
+                        accent: '#57534e',    //stone-600
+                        background: '#FFFFFF',
+                        text: '#030712',      //gray-950
+                        footertext: "#a8a29e" //stone-400
+                    },
+                },
+            },
+        };
+    </script>
+    <script src="listTicket.js" defer></script>
+    <title>Cross Tickets - Tickets</title>
+    <link rel="shortcut icon" href="Ticket.jpg" />
+</head>
+
+<body class="min-h-screen bg-secondary">
+
+    <!-- Bandeau supérieur -->
+    <header class="fixed top-0 left-0 right-0 h-14 bg-background shadow flex items-center justify-between px-6 z-20">
+        <div class="flex items-center gap-4">
+            <button class="text-text hover:text-footertext">
+                ☰
+            </button>
+            <a href="dashboard.html" class="font-semibold text-text">Dashboard</a>
+        </div>
+
+        <div class="flex items-center gap-4 text-sm">
+            <a href="#" class="text-accent">Jean Dupont</a>
+            <a href="connexion.html"
+                class="bg-primary text-white p-2 rounded-lg font-semibold hover:bg-accent transition">
+                Déconnexion
+            </a>
+        </div>
+    </header>
+
+    <div class="flex pt-14 min-h-screen">
+
+        <!-- Bandeau gauche -->
+        <aside class="w-64 bg-background shadow-lg p-6 space-y-6">
+        </aside>
+
+        <div class="mt-5 grid
+            grid-cols-[repeat(auto-fill,340px)]
+            justify-center gap-6
+            w-full min-w-0 py-4">
+            <div class="bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+
+                <!-- En-tête -->
+                <div class="flex justify-center">
+                    <h1 class="text-2xl font-bold text-text text-center">
+                        GTB Leclerc
+                    </h1>
+                </div>
+
+                <!-- Contrat -->
+                <div class="flex items-center mb-2">
+                    <h2 class="text-sm font-semibold text-accent">
+                        Contrat :
+                    </h2>
+                    <a href="#"
+                        class="ml-1 px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                        Margy-NEG
+                    </a>
+                </div>
+
+                <!-- Tickets -->
+                <div>
+                    <h2 class="text-sm font-semibold text-accent mb-2">
+                        Ticket(s)
+                    </h2>
+                    <ul class="flex gap-2 flex-wrap">
+                        <li>
+                            <a href="#"
+                                class="px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                                Désinstallation
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Propriétaire et Collaborateurs -->
+                <div>
+                    <h2 class="text-sm font-semibold text-accent mb-2">
+                        Propriétaire et collaborateurs
+                    </h2>
+                    <ul class="flex gap-2 flex-wrap">
+                        <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                            Vous
+                        </li>
+                        <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                            Alice Martin
+                        </li>
+                        <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                            Lucas Bernard
+                        </li>
+                        <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                            Sofia Dupont
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+
+                <!-- En-tête -->
+                <div class="flex justify-center">
+                    <h1 class="text-2xl font-bold text-text text-center">
+                        SysEngine
+                    </h1>
+                </div>
+
+                <!-- Contrat -->
+                <div class="flex items-center mb-2">
+                    <h2 class="text-sm font-semibold text-accent">
+                        Contrat :
+                    </h2>
+                    <a href="#"
+                        class="ml-1 px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                        Great Factory
+                    </a>
+                </div>
+
+                <!-- Tickets -->
+                <div>
+                    <h2 class="text-sm font-semibold text-accent mb-2">
+                        Ticket(s)
+                    </h2>
+                    <ul class="flex gap-2 flex-wrap">
+                        <li>
+                            <a href="#"
+                                class="px-3 py-1 text-sm rounded-full bg-secondary text-text hover:bg-footertext transition">
+                                Manufacture décommandée
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Propriétaire et Collaborateurs -->
+                <div>
+                    <h2 class="text-sm font-semibold text-accent mb-2">
+                        Propriétaire et collaborateurs
+                    </h2>
+                    <ul class="flex gap-2 flex-wrap">
+                        <li class="px-3 py-1 text-sm rounded-full bg-footertext text-text">
+                            Jean-Jacques Poireau
+                        </li>
+                        <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                            Vous
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,6 +1,35 @@
-    <?php
+<?php
+    function dd($a) {
+        echo("<pre>");
+        echo("<code>");
+        var_dump($a);
+        die();
+        echo("</code>");
+        echo("</pre>");
+    }
 
-$tableau = [
+// BDD connexion
+$dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
+$user = "root";
+$password = "root";
+
+try {
+    $pdo = new PDO($dsn, $user, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+} catch (PDOException $e) {
+    die("Erreur connexion : " . $e->getMessage());
+}
+
+// Pull data
+$sql = "SELECT * FROM tickets";
+$stmt = $pdo->query($sql);
+$tableau = $stmt->fetchAll();
+
+/*
+$tableau =
+[
     [
         "title" => "Dysfonctionnement de l’export PDF",
         "time" => 2,
@@ -60,7 +89,7 @@ $tableau = [
         "facturation" => "Inclus",
         "collaborators" => ["Vous seulement !"]
     ]
-];
+];*/
 
 $advancementStyles = [
     "Ouvert" => "bg-blue-100 text-blue-700",
@@ -241,11 +270,9 @@ $facturationStyles = [
                             Propriétaire et collaborateurs
                         </h2>
                         <ul class="flex gap-2 flex-wrap">
-                            <?php foreach ($ticket["collaborators"] as $collaborator): ?>
                                 <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
-                                    <?= htmlspecialchars($collaborator) ?>
+                                    <?= htmlspecialchars($ticket["owner"]) ?>
                                 </li>
-                            <?php endforeach; ?>
                         </ul>
                     </div>
 

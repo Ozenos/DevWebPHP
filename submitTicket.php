@@ -1,37 +1,30 @@
 <?php
-// Sécurité de base
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit('Méthode non autorisée');
+$dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
+$user = "root";
+$password = "root";
+
+try {
+    $pdo = new PDO($dsn, $user, $password, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+} catch (PDOException $e) {
+    die("Erreur connexion : " . $e->getMessage());
 }
 
-// Récupération des données
-$title = trim($_POST['title'] ?? '');
-$time  = $_POST['time'] ?? '';
-
-$errors = [];
-
-// Validation du titre
-if ($title === '') {
-    $errors[] = "Le titre est obligatoire.";
+// on gère le traitement du formulaire
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $sql = "UPDATE tickets SET title=:title, time=:time, advancement=:advancement, facturation=:facturation, owner=:owner WHERE id=:id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        ":id" => $_POST["id"],
+        ":title" => $_POST["title"],
+        ":time" => $_POST["time"],
+        ":advancement" => $_POST["advancement"],
+        ":facturation" => $_POST["facturation"],
+        ":owner" => $_POST["owner"]
+        ]);
 }
 
-// Validation du temps estimé
-if ($time === '') {
-    $errors[] = "Le temps estimé est obligatoire.";
-} elseif (!filter_var($time, FILTER_VALIDATE_INT) || (int)$time <= 0) {
-    $errors[] = "Le temps estimé doit être un nombre entier positif.";
-}
-
-// S’il y a des erreurs
-if (!empty($errors)) {
-    http_response_code(400);
-    foreach ($errors as $error) {
-        echo "<p style='color:red;'>$error</p>";
-    }
-    exit;
-}
-
-// Données valides → traitement (ex: base de données)
-echo "<p style='color:green;'>Ticket créé avec succès</p>";
+header("location:listTicket.php");
 ?>

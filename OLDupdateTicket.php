@@ -1,85 +1,30 @@
 <?php
-// DANS LE CAS OU UNE ID EST FOURNIE, MODE EDITION
-$_errorTitle = false;
-$_errorTime = true;
+// connexion BDD
+$dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
+$user = "root";
+$password = "root";
 
-if (isset($_GET["id"])) {
-  // connexion BDD
-  $dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
-  $user = "root";
-  $password = "root";
-
-  try {
-    $pdo = new PDO($dsn, $user, $password, [
-      PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-      PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-    ]);
-  } catch (PDOException $e) {
-    die("Erreur connexion : " . $e->getMessage());
-  }
-
-  // Récupération des données
-  $sql = "SELECT * FROM tickets WHERE id=:id";
-  $stmt = $pdo->prepare($sql);
-
-  $stmt->execute([
-    ":id" => $_GET["id"],
+try {
+  $pdo = new PDO($dsn, $user, $password, [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
   ]);
-
-  $ticket = $stmt->fetch();
-
-  // on gère le traitement du formulaire
-  if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Sécurité de base
-    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-      http_response_code(405);
-      exit('Méthode non autorisée');
-    }
-
-    // Récupération des données
-    $title = trim($_POST['title'] ?? '');
-    $time = $_POST['time'] ?? '';
-
-    $errors = [];
-
-    // Validation du titre
-    if ($title === '') {
-      $errors[] = "Le titre est obligatoire.";
-      $_errorTitle = true;
-    }
-
-    // Validation du temps estimé
-    if ($time === '') {
-      $errors[] = "Le temps estimé est obligatoire.";
-      $_errorTime = true;
-    } else if (!filter_var($time, FILTER_VALIDATE_INT) || (int) $time <= 0) {
-      $errors[] = "Le temps estimé doit être un nombre entier positif.";
-      $_errorTime = true;
-    }
-
-    if (!empty($errors)) {  // S’il y a des erreurs
-      http_response_code(400);/*
-      foreach ($errors as $error) {
-        echo "<p style='color:red;'>$error</p>";
-      }*/
-    } else {  // Données valides → traitement
-      $sql = "UPDATE tickets SET title=:title, time=:time, advancement=:advancement, facturation=:facturation, owner=:owner WHERE id=:id";
-      $stmt = $pdo->prepare($sql);
-      $stmt->execute([
-        ":id" => $_POST["id"],
-        ":title" => $_POST["title"],
-        ":time" => $_POST["time"],
-        ":advancement" => $_POST["advancement"],
-        ":facturation" => $_POST["facturation"],
-        ":owner" => $_POST["owner"]
-      ]);
-      header("location:listTicket.php");
-    }
-  }
+} catch (PDOException $e) {
+  die("Erreur connexion : " . $e->getMessage());
 }
 
-// DANS LE CAS OU AUCUNE ID N'EST FOURNIE, MODE CREATION
-else if (isset($_POST["title"])) {
+// Récupération des données
+$sql = "SELECT * FROM tickets WHERE id=:id";
+$stmt = $pdo->prepare($sql);
+
+$stmt->execute([
+  ":id" => $_GET["id"],
+]);
+
+$ticket = $stmt->fetch();
+
+// on gère le traitement du formulaire
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
   // Sécurité de base
   if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
@@ -95,61 +40,36 @@ else if (isset($_POST["title"])) {
   // Validation du titre
   if ($title === '') {
     $errors[] = "Le titre est obligatoire.";
-    $_errorTitle = true;
   }
 
   // Validation du temps estimé
   if ($time === '') {
     $errors[] = "Le temps estimé est obligatoire.";
-    $_errorTime = true;
   } elseif (!filter_var($time, FILTER_VALIDATE_INT) || (int) $time <= 0) {
     $errors[] = "Le temps estimé doit être un nombre entier positif.";
-    $_errorTime = true;
   }
 
   if (!empty($errors)) {  // S’il y a des erreurs
-    http_response_code(400);/*
+    http_response_code(400);
     foreach ($errors as $error) {
       echo "<p style='color:red;'>$error</p>";
-    }*/
-  } else {  // Données valides → traitement
-    echo "<p style='color:green;'>Ticket créé avec succès</p>";
-
-    $dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
-    $user = "root";
-    $password = "root";
-
-    try {
-      $pdo = new PDO($dsn, $user, $password, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
-      ]);
-    } catch (PDOException $e) {
-      die("Erreur connexion : " . $e->getMessage());
-    }
-
-    // on gère le traitement du formulaire
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-      $sql = "INSERT INTO tickets (title, time, advancement, facturation, owner) VALUES (:title, :time, :advancement, :facturation, :owner)";
-      $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $stmt = $pdo->prepare($sql);
-
-      try {
-        $stmt->execute([
-          ":title" => $_POST["title"],
-          ":time" => $_POST["time"],
-          ":advancement" => $_POST["advancement"],
-          ":facturation" => $_POST["facturation"],
-          ":owner" => $_POST["owner"]
-        ]);
-      } catch (PDOException $e) {
-        echo $e->getMessage();
-      }
-
-      header("location:listTicket.php");
     }
   }
+  else {  // Données valides → traitement
+    $sql = "UPDATE tickets SET title=:title, time=:time, advancement=:advancement, facturation=:facturation, owner=:owner WHERE id=:id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+      ":id" => $_POST["id"],
+      ":title" => $_POST["title"],
+      ":time" => $_POST["time"],
+      ":advancement" => $_POST["advancement"],
+      ":facturation" => $_POST["facturation"],
+      ":owner" => $_POST["owner"]
+    ]);
+    header("location:listTicket.php");
+  }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -200,7 +120,7 @@ else if (isset($_POST["title"])) {
           value="<?= $ticket["title"] ?>"
           class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <p id="title_error"
-          class="<?= ($_errorTitle) ? "" : "invisible"; ?> inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
+          class="invisible inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
           Veuillez inclure un titre</p>
       </div>
 
@@ -254,7 +174,7 @@ else if (isset($_POST["title"])) {
         <input type="number" id="time" min="1" step="1" placeholder="1" name="time" value="<?= $ticket["time"] ?>"
           class="w-full rounded-lg bg-secondary px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
         <p id="time_error"
-          class="<?= ($_errorTime) ? "" : "invisible"; ?> inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
+          class="invisible inline-block text-sm font-medium text-red-600 rounded-md border border-red-300 bg-red-200 mt-1 ml-2 py-1 px-2">
           Veuillez inclure une estimation de temps en heures entières</p>
       </div>
 

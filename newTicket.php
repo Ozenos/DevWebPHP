@@ -1,8 +1,8 @@
 <?php
-// DANS LE CAS OU UNE ID EST FOURNIE, MODE EDITION
 $_errorTitle = false;
-$_errorTime = true;
+$_errorTime = false;
 
+// DANS LE CAS OU UNE ID EST FOURNIE, MODE EDITION
 if (isset($_GET["id"])) {
   // connexion BDD
   $dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";

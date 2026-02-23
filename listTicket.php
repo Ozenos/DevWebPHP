@@ -1,5 +1,5 @@
 <?php
-    function dd($a) {
+/*    function dd($a) {
         echo("<pre>");
         echo("<code>");
         var_dump($a);
@@ -7,7 +7,7 @@
         echo("</code>");
         echo("</pre>");
     }
-
+*/
 // BDD connexion
 $dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
 $user = "root";
@@ -164,13 +164,13 @@ $facturationStyles = [
                     </h2>
                     <div class="flex flex-col gap-2">
                         <label class="px-3 py-2 rounded-md border border-tertiary bg-lime-100">
-                            <input type="checkbox" name="facturation[]" value="Inclus"
+                            <input type="checkbox" name="facturation[]" value="Inclus" data-filter="Inclus"
                                 <?= in_array("Inclus", $_GET["facturation"] ?? []) ? "checked" : "" ?>>
                             <span class="text-md text-lime-700">Inclus</span>
                         </label>
 
                         <label class="px-3 py-2 rounded-md border border-tertiary bg-yellow-100">
-                            <input type="checkbox" name="facturation[]" value="Facturable"
+                            <input type="checkbox" name="facturation[]" value="Facturable" data-filter="Facturable"
                                 <?= in_array("Facturable", $_GET["facturation"] ?? []) ? "checked" : "" ?>>
                             <span class="text-md text-yellow-700">Facturable</span>
                         </label>
@@ -186,7 +186,7 @@ $facturationStyles = [
                         <?php foreach (["Ouvert", "En cours", "Terminé"] as $status): ?>
                             <label class="px-3 py-2 rounded-md border border-tertiary
                             <?= $advancementStyles[$status] ?? "bg-gray-100 text-gray-700"   ?>">
-                                <input type="checkbox" name="advancement[]" value="<?= $status ?>"
+                                <input type="checkbox" data-filter="<?= $status ?>" name="advancement[]" value="<?= $status ?>"
                                     <?= in_array($status, $_GET["advancement"] ?? []) ? "checked" : "" ?>>
                                 <span class="text-md <?= $advancementStyles[$status] ?? "bg-gray-100 text-gray-700" ?>">
                                     <?= $status ?></span>
@@ -196,10 +196,10 @@ $facturationStyles = [
                 </div>
 
                 <button class="w-full bg-primary text-white py-2 rounded-lg font-semibold">
-                    Filtrer
+                    Filtrer (par URL)
                 </button>
                 <a href="listTicket.php"
-                    class="block text-center mt-3 text-sm text-accent underline">
+                    class="block text-center text-sm text-accent underline">
                     Réinitialiser les filtres
                 </a>
 
@@ -232,7 +232,8 @@ $facturationStyles = [
                 });
             ?>
             <?php foreach ($filteredTickets as $ticket): ?>
-                <div class="ticket bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start">
+                <div class="ticket bg-background rounded-xl shadow-lg p-8 space-y-6 w-[340px] max-w-[340px] self-start"
+                data-tags="<?= $ticket["advancement"] ?> <?= $ticket["facturation"] ?>">
 
                     <!-- En-tête -->
                     <div class="flex justify-center">

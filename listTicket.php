@@ -12,6 +12,11 @@
 $dsn = "mysql:host=localhost:3306;dbname=cross_tickets_db;charset=utf8mb4";
 $user = "root";
 $password = "root";
+/*
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+*/
 
 try {
     $pdo = new PDO($dsn, $user, $password, [
@@ -22,74 +27,12 @@ try {
     die("Erreur connexion : " . $e->getMessage());
 }
 
+require_once "functions.php";
+
 // Pull data
 $sql = "SELECT * FROM tickets";
 $stmt = $pdo->query($sql);
 $tableau = $stmt->fetchAll();
-
-/*
-$tableau =
-[
-    [
-        "title" => "Dysfonctionnement de l’export PDF",
-        "time" => 2,
-        "advancement" => "En cours",
-        "facturation" => "Inclus",
-        "collaborators" => ["Vous", "Alice Martin", "Lucas Bernard", "Sofia Dupont"]
-    ],
-    [
-        "title" => "Désinstallation",
-        "time" => 2,
-        "advancement" => "En cours",
-        "facturation" => "Inclus",
-        "collaborators" => ["Vous", "Alice Martin", "Lucas Bernard", "Sofia Dupont"]
-    ],
-    [
-        "title" => "DESTRUCTION",
-        "time" => 1,
-        "advancement" => "En cours",
-        "facturation" => "Facturable",
-        "collaborators" => [
-            "Vous",
-            "Alice Martin",
-            "Lucas Bernard",
-            "Sofia Dupont",
-            "Le prof",
-            "L'école",
-            "Le pays",
-            "Le monde"
-        ]
-    ],
-    [
-        "title" => "DESTRUCTION ABSOLUE",
-        "time" => 20,
-        "advancement" => "Terminé",
-        "facturation" => "Facturable",
-        "collaborators" => ["L'existence même", "Vous"]
-    ],
-    [
-        "title" => "Another one",
-        "time" => 0,
-        "advancement" => "Ouvert",
-        "facturation" => "Facturable",
-        "collaborators" => ["Vous"]
-    ],
-    [
-        "title" => "Titre",
-        "time" => 0,
-        "advancement" => "Ouvert",
-        "facturation" => "Inclus",
-        "tags" => ["inclus", "ouvert"],
-        "collaborators" => ["Vous seulement !"]
-    ],
-    [
-        "title" => "Finale des Worlds",
-        "time" => 13,
-        "advancement" => "Terminé",
-        "facturation" => "Inclus",
-        "collaborators" => ["Vous seulement !"]
-    ]
-];*/
 
 $advancementStyles = [
     "Ouvert" => "bg-blue-100 text-blue-700",
@@ -195,13 +138,15 @@ $facturationStyles = [
                     </div>
                 </div>
 
-                <button class="w-full bg-primary text-white py-2 rounded-lg font-semibold">
-                    Filtrer (par URL)
-                </button>
-                <a href="listTicket.php"
-                    class="block text-center text-sm text-accent underline">
-                    Réinitialiser les filtres
-                </a>
+                <div>
+                    <button class="w-full bg-primary text-white py-2 rounded-lg font-semibold">
+                        Filtrer (par URL)
+                    </button>
+                    <a href="listTicket.php"
+                        class="block text-center mt-3 text-sm text-accent underline">
+                        Réinitialiser les filtres
+                    </a>
+                </div>
 
             </form>
         </aside>
@@ -271,9 +216,18 @@ $facturationStyles = [
                             Propriétaire et collaborateurs
                         </h2>
                         <ul class="flex gap-2 flex-wrap">
-                                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
-                                    <?= htmlspecialchars($ticket["owner"]) ?>
+                            <?php $collabs = getTicketUsers($pdo, $ticket["ID"]); ?>
+                                <li class="px-3 py-1 text-sm rounded-full bg-tertiary text-text">
+                                    <?= htmlspecialchars($collabs[0]) ?>
                                 </li>
+                            <?php foreach (array_slice($collabs, 1) as $collab): ?>
+                                            <!-- ignorer premier élément -->
+                                <li class="px-3 py-1 text-sm rounded-full bg-secondary text-text">
+                                    <?= htmlspecialchars($collab) ?>
+                                </li>
+                            <?php endforeach; ?>
+                            
+                                
                         </ul>
                     </div>
 
